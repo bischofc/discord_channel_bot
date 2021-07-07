@@ -1,16 +1,14 @@
 import discord
-import sys
+import os
 
 if __name__ == '__main__':
 
-    prefix = '!'
+    prefix = '$'
 
-    token = sys.argv[1] if len(sys.argv) == 2 else None
+    intents = discord.Intents.default()
+    intents.members = True
 
-    if not token:
-        sys.exit("Please provide bot token as argument")
-
-    client = discord.Client()
+    client = discord.Client(intents=intents)
 
 
     async def clone_category_if_not_exists(category, new_category_name):
@@ -29,6 +27,9 @@ if __name__ == '__main__':
             await args[0].channel.send(
                 "Das hat nicht funktioniert, bitte versuch es nochmal... aber anders. Oder wende Dich an einen Admin.")
 
+    @client.event
+    async def on_member_join(member):
+      await member.send("Herzlich willkommen zur Institutstr!\nTippe '!hilfe' in einen Kanal, um zu sehen, was Du tun kannst.")
 
     @client.event
     async def on_ready():
@@ -43,10 +44,14 @@ if __name__ == '__main__':
         if message.content.startswith(f'{prefix}hilfe') or message.content.startswith(f'{prefix}help'):
             await message.channel.send('''Befehle:
                 !hilfe / !help: Zeigt alle Befehle
-                !hallo: Sagt hallo
-                !neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> in der gleichen Kategorie
-                !zu: Archiviert den aktuellen Kanal
-                !auf: Reaktiviert den aktuellen Kanal''')
+                !neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> in der gleichen Kategorie''')
+
+                #'''Befehle:
+                #!hilfe / !help: Zeigt alle Befehle
+                #!hallo: Sagt hallo
+                #!neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> #in der gleichen Kategorie
+                #!zu: Archiviert den aktuellen Kanal
+                #!auf: Reaktiviert den aktuellen Kanal'''
 
         if message.content.startswith(f'{prefix}hallo'):
             await message.channel.send(f'Hallo {message.author.display_name}!')
@@ -75,4 +80,4 @@ if __name__ == '__main__':
             await message.channel.edit(category=open_category)
             await message.channel.send(f"Reaktiviert in Kategorie {open_category.mention}")
 
-    client.run(token)
+    client.run(os.getenv("TOKEN"))
