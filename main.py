@@ -1,16 +1,25 @@
 import discord
+import os
 import sys
 
 if __name__ == '__main__':
 
+    # Set bot prefix
     prefix = '!'
 
-    token = sys.argv[1] if len(sys.argv) == 2 else None
-
+    # Get bot login token
+    if len(sys.argv) == 2:
+        token = sys.argv[1]
+    else:
+        token = os.getenv("DC_BOT_TOKEN")
     if not token:
-        sys.exit("Please provide bot token as argument")
+      sys.exit("No token found: Please pass as argument or set environment variable DC_BOT_TOKEN")
 
-    client = discord.Client()
+
+    # Set intents and create client
+    intents = discord.Intents.default()
+    intents.members = True
+    client = discord.Client(intents=intents)
 
 
     async def clone_category_if_not_exists(category, new_category_name):
@@ -28,6 +37,11 @@ if __name__ == '__main__':
         if event == 'on_message':
             await args[0].channel.send(
                 "Das hat nicht funktioniert, bitte versuch es nochmal... aber anders. Oder wende Dich an einen Admin.")
+
+
+    @client.event
+    async def on_member_join(member):
+      await member.send("Herzlich willkommen zur Institutstr!\nTippe '!hilfe' in einen Kanal, um zu sehen, was Du tun kannst.")
 
 
     @client.event

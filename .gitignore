@@ -2,3 +2,8 @@
 .idea/
 
 venv/
+
+.replit
+.breakpoints
+poetry.lock
+pyproject.toml
