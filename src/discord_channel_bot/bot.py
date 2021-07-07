@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-command_prefix = '$'
+command_prefix = '!'
 startup_extensions = ["src.discord_channel_bot.channel"]
 bot_description = '''Bot, der beim Kanalmanagement hilft.
 Er kann z.B. neue Kanäle eröffnen, archivieren und wieder aktivieren.'''
