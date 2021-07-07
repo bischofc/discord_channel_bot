@@ -11,9 +11,9 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         token = sys.argv[1]
     else:
-        token = os.getenv("TOKEN")
+        token = os.getenv("DC_BOT_TOKEN")
     if not token:
-      sys.exit("No token found")
+      sys.exit("No token found: Please pass as argument or as environment variable named DC_BOT_TOKEN")
 
     # Set intents and create client
     intents = discord.Intents.default()
@@ -55,11 +55,11 @@ if __name__ == '__main__':
 
         if message.content.startswith(f'{prefix}hilfe') or message.content.startswith(f'{prefix}help'):
             await message.channel.send('''Befehle:
-                #!hilfe / !help: Zeigt alle Befehle
-                #!hallo: Sagt hallo
-                #!neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> #in der gleichen Kategorie
-                #!zu: Archiviert den aktuellen Kanal
-                #!auf: Reaktiviert den aktuellen Kanal''')
+                !hilfe / !help: Zeigt alle Befehle
+                !hallo: Sagt hallo
+                !neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> in der gleichen Kategorie
+                !zu: Archiviert den aktuellen Kanal
+                !auf: Reaktiviert den aktuellen Kanal''')
 
         if message.content.startswith(f'{prefix}hallo'):
             await message.channel.send(f'Hallo {message.author.display_name}!')
