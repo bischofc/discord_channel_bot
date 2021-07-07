@@ -2,7 +2,7 @@
 
 ## Requirements
 - python3
-- python package "discord.py"
+- run `pip3 install -r requirements.txt` to install required packages
 
 ## Run
-python3 main.py \<Bot-Token>
+- `python3 main.py <Bot-Token>`
