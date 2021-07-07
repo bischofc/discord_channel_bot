@@ -15,6 +15,7 @@ if __name__ == '__main__':
     if not token:
       sys.exit("No token found: Please pass as argument or as environment variable named DC_BOT_TOKEN")
 
+
     # Set intents and create client
     intents = discord.Intents.default()
     intents.members = True
