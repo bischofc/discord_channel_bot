@@ -55,15 +55,11 @@ if __name__ == '__main__':
 
         if message.content.startswith(f'{prefix}hilfe') or message.content.startswith(f'{prefix}help'):
             await message.channel.send('''Befehle:
-                !hilfe / !help: Zeigt alle Befehle
-                !neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> in der gleichen Kategorie''')
-
-                #'''Befehle:
                 #!hilfe / !help: Zeigt alle Befehle
                 #!hallo: Sagt hallo
                 #!neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> #in der gleichen Kategorie
                 #!zu: Archiviert den aktuellen Kanal
-                #!auf: Reaktiviert den aktuellen Kanal'''
+                #!auf: Reaktiviert den aktuellen Kanal''')
 
         if message.content.startswith(f'{prefix}hallo'):
             await message.channel.send(f'Hallo {message.author.display_name}!')
