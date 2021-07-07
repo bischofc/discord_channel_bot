@@ -13,7 +13,7 @@ if __name__ == '__main__':
     else:
         token = os.getenv("DC_BOT_TOKEN")
     if not token:
-      sys.exit("No token found: Please pass as argument or as environment variable named DC_BOT_TOKEN")
+      sys.exit("No token found: Please pass as argument or set environment variable DC_BOT_TOKEN")
 
 
     # Set intents and create client
