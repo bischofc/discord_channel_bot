@@ -1,13 +1,23 @@
 import discord
 import os
+import sys
 
 if __name__ == '__main__':
 
-    prefix = '$'
+    # Set bot prefix
+    prefix = '!'
 
+    # Get bot login token
+    if len(sys.argv) == 2:
+        token = sys.argv[1]
+    else:
+        token = os.getenv("TOKEN")
+    if not token:
+      sys.exit("No token found")
+
+    # Set intents and create client
     intents = discord.Intents.default()
     intents.members = True
-
     client = discord.Client(intents=intents)
 
 
@@ -27,9 +37,11 @@ if __name__ == '__main__':
             await args[0].channel.send(
                 "Das hat nicht funktioniert, bitte versuch es nochmal... aber anders. Oder wende Dich an einen Admin.")
 
+
     @client.event
     async def on_member_join(member):
       await member.send("Herzlich willkommen zur Institutstr!\nTippe '!hilfe' in einen Kanal, um zu sehen, was Du tun kannst.")
+
 
     @client.event
     async def on_ready():
@@ -80,4 +92,4 @@ if __name__ == '__main__':
             await message.channel.edit(category=open_category)
             await message.channel.send(f"Reaktiviert in Kategorie {open_category.mention}")
 
-    client.run(os.getenv("TOKEN"))
+    client.run(token)
