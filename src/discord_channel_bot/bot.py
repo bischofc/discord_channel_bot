@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
 
+bot_version = 1
 command_prefix = '!'
+
 startup_extensions = ["src.discord_channel_bot.channel"]
 bot_description = '''Bot, der beim Kanalmanagement hilft.
 Er kann z.B. neue Kanäle eröffnen, archivieren und wieder aktivieren.'''
@@ -35,15 +37,22 @@ async def hilfe(ctx):
     await ctx.send(f'''Befehle:
     {command_prefix}help: Zeigt eine detaillierte Übersicht aller Befehle
     {command_prefix}hilfe: Zeigt eine Kurzübersicht aller Befehle
+    
+    {command_prefix}auf: Reaktiviert den aktuellen Kanal
     {command_prefix}hallo: Sagt hallo
     {command_prefix}neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> in der gleichen Kategorie
-    {command_prefix}zu: Archiviert den aktuellen Kanal
-    {command_prefix}auf: Reaktiviert den aktuellen Kanal''')
+    {command_prefix}version: Gibt die aktuelle Bot-Version aus
+    {command_prefix}zu: Archiviert den aktuellen Kanal''')
 
 
 @bot.command(description='Sagt hallo')
 async def hallo(ctx):
     await ctx.send(f'Hallo {ctx.author.display_name}!')
+
+
+@bot.command(description='Gibt die aktuelle Bot-Version aus')
+async def version(ctx):
+    await ctx.send(f'Version: {bot_version}')
 
 
 def run(token):
