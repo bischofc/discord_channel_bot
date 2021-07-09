@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-bot_version = 1
+bot_version = 2
 command_prefix = '!'
 
 startup_extensions = ["src.discord_channel_bot.channel"]
