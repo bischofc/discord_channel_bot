@@ -12,6 +12,10 @@ class Channel(commands.Cog):
         return True if Channel.find_named(user.roles, "Admins") else False
 
     @staticmethod
+    def is_beta_tester(user):
+        return True if Channel.find_named(user.roles, "Beta-Tester") else False
+
+    @staticmethod
     def find_named(list_with_named, name):
         list_of_one = []
         if name in [item.name for item in list_with_named]:
@@ -69,7 +73,7 @@ class Channel(commands.Cog):
 
     @commands.command(description='Kopiert eine <anzahl> von Nachrichten in den Kanal namens <in_kanal_name>')
     async def kopieren(self, ctx, anzahl: int, in_kanal_name: str, send_message=True):
-        if anzahl < 1:
+        if anzahl < 1 or not Channel.is_beta_tester(ctx.author):  # TODO: Beta-Tester
             return
 
         channel = Channel.find_named(ctx.guild.text_channels, in_kanal_name)
@@ -78,7 +82,9 @@ class Channel(commands.Cog):
 
     @commands.command(description='Entfernt eine <anzahl> von Nachrichten aus dem aktuellen Kanal')
     async def entfernen(self, ctx, anzahl: int, send_message=True):
-        if not Channel.is_admin(ctx.author) or anzahl < 1:
+        if not Channel.is_admin(ctx.author) or \
+                not Channel.is_beta_tester(ctx.author) or \
+                anzahl < 1:  # TODO: Beta-Tester
             return
 
         messages = await ctx.channel.history(limit=anzahl + 1).flatten()
@@ -90,7 +96,9 @@ class Channel(commands.Cog):
 
     @commands.command(description='Verschiebt eine <anzahl> von Nachrichten in den Kanal namens <in_kanal_name>')
     async def verschieben(self, ctx, anzahl: int, in_kanal_name: str):
-        if not Channel.is_admin(ctx.author) or anzahl < 1:
+        if not Channel.is_admin(ctx.author) or \
+                not Channel.is_beta_tester(ctx.author) or \
+                anzahl < 1:  # TODO: Beta-Tester
             return
 
         channel = Channel.find_named(ctx.guild.text_channels, in_kanal_name)
