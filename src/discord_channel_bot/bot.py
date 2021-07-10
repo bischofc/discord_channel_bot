@@ -1,10 +1,12 @@
 import discord
 from discord.ext import commands
 
-bot_version = 2
+from .utils import is_admin
+
+bot_version = 3
 command_prefix = '!'
 
-startup_extensions = ["src.discord_channel_bot.channel"]
+startup_extensions = ["src.discord_channel_bot.channel", "src.discord_channel_bot.message"]
 bot_description = '''Bot, der beim Kanalmanagement hilft.
 Er kann z.B. neue Kanäle eröffnen, archivieren und wieder aktivieren.'''
 
@@ -34,15 +36,26 @@ async def on_member_join(member):
 
 @bot.command(description='Zeigt eine Kurzübersicht aller Befehle')
 async def hilfe(ctx):
-    await ctx.send(f'''Befehle:
-    {command_prefix}help: Zeigt eine detaillierte Übersicht aller Befehle
-    {command_prefix}hilfe: Zeigt eine Kurzübersicht aller Befehle
+    prefix = command_prefix
+    msg = f'''Befehle:
+    {prefix}help: Zeigt eine detaillierte Übersicht aller Befehle
+    {prefix}hilfe: Zeigt eine Kurzübersicht aller Befehle
     
-    {command_prefix}auf: Reaktiviert den aktuellen Kanal
-    {command_prefix}hallo: Sagt hallo
-    {command_prefix}neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> in der gleichen Kategorie
-    {command_prefix}version: Gibt die aktuelle Bot-Version aus
-    {command_prefix}zu: Archiviert den aktuellen Kanal''')
+    {prefix}auf: Reaktiviert den aktuellen Kanal
+    {prefix}hallo: Sagt hallo
+    {prefix}neu <Kanalname>: Erzeugt neuen Kanal namens <Kanalname> in der gleichen Kategorie
+    {prefix}version: Gibt die aktuelle Bot-Version aus
+    {prefix}zu: Archiviert den aktuellen Kanal'''
+
+    if is_admin(ctx.author):
+        msg += f'''\n\nAdmin-Befehle:
+    {prefix}entfernen <anzahl>: Entfernt die letzten <anzahl> Einträge
+    {prefix}kopieren <anzahl> <in_kanal_name>: Kopiert die letzten <anzahl> Einträge in <in_kanal_name> \
+    (nur Beta-Tester)
+    {prefix}verschieben <anzahl> <in_kanal_name>: Verschiebt die letzten <anzahl> Einträge in <in_kanal_name> \
+    (nur Beta-Tester)'''
+
+    await ctx.send(msg)
 
 
 @bot.command(description='Sagt hallo')
