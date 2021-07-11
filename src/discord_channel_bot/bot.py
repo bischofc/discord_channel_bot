@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from .utils import is_admin
 
-bot_version = 3
+bot_version = 4
 command_prefix = '!'
 
 startup_extensions = ["src.discord_channel_bot.channel", "src.discord_channel_bot.message"]
